@@ -32,6 +32,7 @@ public class DetailPelanggan_All {
     private String mKoordinat;
     private String mTgl_Monitoring;
     private String mVerifikasi;
+    private String mUnitup;
     private static JdbcTemplate jdbcTemplate = new JdbcTemplate(DatabaseConnection.getmDataSource());
 
     public String getmAlamat() {
@@ -130,6 +131,14 @@ public class DetailPelanggan_All {
         this.mVerifikasi = mVerifikasi;
     }
 
+    public String getmUnitup() {
+        return mUnitup;
+    }
+
+    public void setmUnitup(String mUnitup) {
+        this.mUnitup = mUnitup;
+    }
+        
     public static class DetailRowMapper implements RowMapper<DetailPelanggan_All> {
 
         @Override
@@ -157,6 +166,7 @@ public class DetailPelanggan_All {
             data.setmKoordinat(rs.getString(10));
             data.setmVerifikasi(rs.getString(11));
             data.setmTgl_Monitoring(rs.getString(12));
+            data.setmUnitup(rs.getString(13));
 
             return data;
         }
@@ -165,7 +175,7 @@ public class DetailPelanggan_All {
      public static List<DetailPelanggan_All> getDataListPelanggan(String pIDPEL) {
        // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
                 + "from dpm "
                 + "where idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -178,7 +188,7 @@ public class DetailPelanggan_All {
     public static List<DetailPelanggan_All> getDataListKwh0(String pIDPEL) {
        // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
                 + "from dpm "
                 + "where totkwh=0 AND idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -191,7 +201,7 @@ public class DetailPelanggan_All {
     public static List<DetailPelanggan_All> getDataListKwhMaks(String pIDPEL) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -204,7 +214,7 @@ public class DetailPelanggan_All {
     public static List<DetailPelanggan_All> getDataListKwh0_perbulan(String pIDPEL, String pBlth) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
                 + "from dpm "
                 + "where totkwh=0 AND blth='" + pBlth + "' AND idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -216,7 +226,7 @@ public class DetailPelanggan_All {
 
     public static List<DetailPelanggan_All> getDataListKwhMaks_perbulan(String pIDPEL, String pBlth) {
        // DataSource dataSource = DatabaseConnection.getmDataSource();
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND blth='" + pBlth + "' AND idpel='" + pIDPEL + "' order by idpel,blth";
 

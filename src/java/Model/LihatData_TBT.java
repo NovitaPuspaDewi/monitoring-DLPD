@@ -424,5 +424,78 @@ public class LihatData_TBT {
 
         return list;
     }
+    
+     public static int hitungtbt_sudahapprove(String pBlth, String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is not null"
+                + " AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+     
+      public static int hitungtbt_sudahapprove(String pBlth) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is not null"
+                + " AND blth='" + pBlth + "' ";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+     
+      public static int hitungtbt_belumapprove(String pBlth, String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is null"
+                + " AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+      
+      public static int hitungtbt_belumapprove(String pBlth) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is null"
+                + " AND blth='" + pBlth + "' ";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
    
 }

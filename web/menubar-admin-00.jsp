@@ -64,6 +64,7 @@
                                     <a class="item" href="data-sudah-approve-kwh-0-rayon.jsp">Sudah Approve</a>
                                     <a class="item" href="data-belum-approve-kwh-0-rayon.jsp" >Belum Aprrove</a>
                                     <a class="item" href="data-approve-semua-kwh-0-rayon.jsp">Cek Semua</a>
+                                    <a class="item" href="kwh-0-cek-approve-per-bulan-rayon.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                             <div class="column">
@@ -72,6 +73,7 @@
                                     <a class="item" href="data-sudah-approve-kwh-maks-rayon.jsp">Sudah Approve</a>
                                     <a class="item" href="data-belum-approve-kwh-maks-rayon.jsp">Belum Approve</a>
                                     <a class="item" href="data-approve-semua-kwh-maks-rayon.jsp">Cek Semua</a>
+                                    <a class="item" href="kwh-maks-cek-approve-per-bulan-rayon.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                             <div class="column">
@@ -80,6 +82,7 @@
                                     <a class="item">Sudah Approve</a>
                                     <a class="item">Belum Approve</a>
                                     <a class="item">Cek Semua</a>
+                                    <a class="item" href="tbt-cek-approve-per-bulan-rayon.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                         </div>

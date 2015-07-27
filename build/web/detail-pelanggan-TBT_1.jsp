@@ -80,10 +80,10 @@
                                     <th>NAMA</th>
                                     <th>ALAMAT</th>
                                     <th>TARIF/DAYA</th>
+                                    <th>UNITUP</th>
                                     <th>TGL BAYAR</th> 
                                     <th>BULAN</th>
                                     <th>STATUS MONITORING</th>
-                                    <th>KOORDINAT</th>
                                     <th>VERIFIKASI</th>
                                     <th>TANGGAL MONITORING</th>
                                 </tr>
@@ -100,6 +100,7 @@
                                     <td><%= kendaraanList.get(i).getmNama()%></td>
                                     <td><%= kendaraanList.get(i).getmAlamat()%></td>
                                     <td><%= kendaraanList.get(i).getmTarif()%>/<%= kendaraanList.get(i).getmDaya()%></td>
+                                   <td><%= kendaraanList.get(i).getmUnitup()%></td>
                                     <td><%= kendaraanList.get(i).getmTgl_Bayar()%></td>
                                     <td><%= kendaraanList.get(i).getmBulan()%></td>
                                     <% status = kendaraanList.get(i).getmStatus_Monitoring();
@@ -109,12 +110,7 @@
                                     <td>  <i class="checkmark icon"></i></td>
                                     <%  }%>
 
-                                    <% status = kendaraanList.get(i).getmKoordinat();
-                                        if (status == null) {
-                                            status = "Belum Cek";
-                                        }
-                                    %>
-                                    <td><%=status%></td>
+                                   
                                     <% status = kendaraanList.get(i).getmVerifikasi();
                                         if (status == null) {
                                             status = "Belum Verifikasi";

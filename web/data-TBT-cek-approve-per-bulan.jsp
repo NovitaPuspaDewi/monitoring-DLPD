@@ -4,43 +4,55 @@
     Author     : NOVITA
 --%>
 
-<%@page import="Model.LihatData_Rayon"%>
-<%@page import="Model.LihatData_TBT"%>
+<%@page import="Model.*"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <%
-        String kode_rayon = session.getAttribute("username").toString();
         String bulantahun = session.getAttribute("blth").toString();
         String status = null;
-        String bulan_beli = null;
-        List<LihatData_TBT> kendaraanList = LihatData_TBT.getDataListTBT_blth(bulantahun,kode_rayon);
+        List<LihatData_TBT> kendaraanList = LihatData_TBT.getDataListTBT(bulantahun);
         int count = kendaraanList.size();
+        int count_belum = LihatData_TBT.hitungtbt_belumapprove(bulantahun);
+        int count_sudah = LihatData_TBT.hitungtbt_sudahapprove(bulantahun);
+
+        //session.removeAttribute("blth");
 
         if (request.getParameter("cari") != null) {
             String bulan = request.getParameter("bulan");
             String tahun = request.getParameter("tahun").substring(0, 4);
             String blth = tahun + bulan;
             session.setAttribute("blth", blth);
-            response.sendRedirect("data-TBT-cari-blth-rayon.jsp");
+            response.sendRedirect("data-TBT-cek-approve-per-bulan.jsp");
         }
+
         if (request.getParameter("commit") != null) {
-            session.setAttribute("idpel", request.getParameter("commit"));
-            response.sendRedirect("detail-pelanggan-TBT-rayon.jsp");
+            session.setAttribute("id_blth", request.getParameter("commit"));
+            response.sendRedirect("approve-TBT.jsp");
+        }
+
+        if (request.getParameter("commit1") != null) {
+            session.setAttribute("id_blth", request.getParameter("commit1"));
+            response.sendRedirect("TBT-belum-cek.jsp");
+        }
+
+        if (request.getParameter("commit2") != null) {
+            session.setAttribute("id_blth", request.getParameter("commit2"));
+            response.sendRedirect("detail-approve-TBT.jsp");
         }
     %>
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Data Pelanggan TBT</title>
+        <title>Cek Monitoring TBT per-Bulan</title>
         <link href="semantic/packaged/css/semantic.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="img/logo_PLN.jpg" type="image/jpg">
     </head>
     <body style="background-color:#CD5C5C">
         <!--Menu bar-->
-        <%@include file="menubar-admin-00.jsp" %>
+        <%@include file="menubar-admin.jsp" %>
         <br>
         <br>
         <br>
@@ -52,7 +64,8 @@
                         Info!
                     </div>
                     <p>
-                        Terdapat <b><%=count%></b> data pelanggan UNITUP ${username} yang tidak beli token di atas 3 bulan.<br><br>
+                        Terdapat <b><%=count%></b> pelanggan tidak beli token lebih dari 3 bulan.<br>
+                        <b><%=count_sudah%></b> sudah di-approve dan <b><%=count_belum%></b> belum di-approve <br><br>
 
                     <form action="" id="saveMember">
                         <div class="ui fluid form segment">
@@ -103,22 +116,21 @@
                     <div class="row">
                         <div class="ten wide column">
                             <h4 class="ui top attached center aligned inverted red block header">
-                                DATA PELANGGAN TBT UNITUP  ${username} BULAN ${blth}
+                                DATA PELANGGAN TBT BULAN <%=bulantahun.substring(4)%> TAHUN <%=bulantahun.substring(0, 4)%>
                             </h4>
                             <table class="ui padded table segment attached" id="filmTable">
                                 <thead>
                                     <tr>
                                         <th>BLTH</th>
-                                        <th>IDPEL</th>
+                                        <th>ID PELANGGAN</th>
                                         <th>NO METER</th>
                                         <th>NAMA</th>
                                         <th>ALAMAT</th>
                                         <th>TARIF/DAYA</th>
-                                        <th>UNITUP</th> 
-                                        <th>TGL BAYAR</th>
+                                        <th>TGL BAYAR</th> 
+                                        <th>UNITUP</th>
                                         <th>BULAN</th>
                                         <th>STATUS MONITORING</th>
-                                        <th>LIHAT DETAIL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -133,26 +145,29 @@
                                         <td><%= kendaraanList.get(i).getmNama()%></td>
                                         <td><%= kendaraanList.get(i).getmAlamat()%></td>
                                         <td><%= kendaraanList.get(i).getmTarif()%>/<%= kendaraanList.get(i).getmDaya()%></td>
-                                        <td><%= kendaraanList.get(i).getmUnitup()%></td>
                                         <td><%= kendaraanList.get(i).getmTgl_Bayar()%></td>
-                                        <%bulan_beli = kendaraanList.get(i).getmBulan();
-                                            if (bulan_beli.equals("<6")) {%>
-                                        <td>4-6 bulan</td>  
-                                        <%     } else {
-                                        %>
-                                        <td>> 6 bulan</td>
-                                        <%}
-                                            status = kendaraanList.get(i).getmStatus_Monitoring();
-                                            if (status == null) {%>
-                                        <td> <i class="remove icon"></i></td>
-                                        <% } else {%>
-                                        <td>  <i class="checkmark icon"></i></td>
-                                        <%  }%>
-
-                                        <td><center><input class="ui tiny red button" type="submit" value="<%=kendaraanList.get(i).getmIdpel()%>" name="commit"></center></td>
-                                </tr>
+                                        <td><%= kendaraanList.get(i).getmUnitup()%></td>
+                                        <td><%= kendaraanList.get(i).getmBulan()%></td>
+                                        <% String id = kendaraanList.get(i).getmIdpel();
+                                            String blth = kendaraanList.get(i).getmBlth();
+                                            String id_blth = blth + id;
+                                            String cek = kendaraanList.get(i).getmStatus_Monitoring();
+                                            status = kendaraanList.get(i).getmApprove();
+                                                                                   if ((status == null) && (cek != null)) {
+                                                                                       status = "Belum Approve, klik untuk Approve";%>
+                                        <td><center><%=status%><br>
+                                    <input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
+                                    <% } else if ((status == null) && (cek == null)) {
+                                        status = "Belum monitoring, klik untuk isi monitoring";%>
+                                <td><center><%=status%><br>
+                                    <input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
+                                    <%} else {
+                                        status = "Sudah Approve, klik untuk lihat detail";%>
+                                <td><center><%=status%><br>
+                                    <input class="ui tiny green button" type="submit" value="<%=id_blth%>" name="commit2"></center></td>
+                                    <%}%>
+                                </tr>                                                                   
                                 <% }%>
-
                                 </tbody>
                             </table>
                         </div>

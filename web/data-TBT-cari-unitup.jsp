@@ -140,7 +140,8 @@
                             <table class="ui padded table segment attached" id="filmTable">
                                 <thead>
                                     <tr>
-                                        <th>ID PELANGGAN</th>
+                                        <th>BLTH</th>
+                                        <th>IDPEL</th>
                                         <th>NO METER</th>
                                         <th>NAMA</th>
                                         <th>ALAMAT</th>
@@ -158,6 +159,7 @@
                                     %>
 
                                     <tr>
+                                        <td><%= kendaraanList.get(i).getmBlth()%></td>
                                         <td><%= kendaraanList.get(i).getmIdpel()%></td>
                                         <td><%= kendaraanList.get(i).getmNoMeter()%></td>
                                         <td><%= kendaraanList.get(i).getmNama()%></td>

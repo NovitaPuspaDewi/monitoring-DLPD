@@ -24,26 +24,44 @@ public class TestClass {
 //        System.out.println("LOGIN STATUS : "+validateLoginCredential);
 
 //        int count = Approve.hitungApprove_sudahcek_0("07-2015");
-//        System.out.println(count);
-//        System.out.println(Dashboard.hitungtbt("201506", "22500"));
-//        System.out.println(Dashboard.hitungtbt_belumcek("201506", "22500"));
-//        System.out.println(Dashboard.hitungtbt_sudahcek("201506", "22500"));
-//        System.out.println(Dashboard.hitungtbt_belumapprove("201506", "22500"));
-//        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22500"));
-//
-//        System.out.println(Dashboard.hitungtbt("201506", "22510"));
-//        System.out.println(Dashboard.hitungtbt_belumcek("201506", "22510"));
-//        System.out.println(Dashboard.hitungtbt_sudahcek("201506", "22510"));
-//        System.out.println(Dashboard.hitungtbt_belumapprove("201506", "22510"));
-//        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22510"));
-//
-//        System.out.println(Dashboard.hitungtbt("201506", "22520"));
-//        System.out.println(Dashboard.hitungtbt_belumcek("201506", "22520"));
-//        System.out.println(Dashboard.hitungtbt_sudahcek("201506", "22520"));
-//        System.out.println(Dashboard.hitungtbt_belumapprove("201506", "22520"));
-//        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22520"));
+       // System.out.println(count);
+        System.out.print(Dashboard.hitungtbt("201506", "22500")+" ");
+        System.out.print(Dashboard.hitungtbt_belumcek("201506", "22500")+" ");
+        System.out.print(Dashboard.hitungtbt_sudahcek("201506", "22500")+" ");
+        System.out.print(Dashboard.hitungtbt_belumapprove("201506", "22500")+" ");
+        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22500"));
 
-        query4List();
+        System.out.print(Dashboard.hitungtbt("201506", "22510")+" ");
+        System.out.print(Dashboard.hitungtbt_belumcek("201506", "22510")+" ");
+        System.out.print(Dashboard.hitungtbt_sudahcek("201506", "22510")+" ");
+        System.out.print(Dashboard.hitungtbt_belumapprove("201506", "22510")+" ");
+        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22510"));
+
+        System.out.print(Dashboard.hitungtbt("201506", "22520")+" ");
+        System.out.print(Dashboard.hitungtbt_belumcek("201506", "22520")+" ");
+        System.out.print(Dashboard.hitungtbt_sudahcek("201506", "22520")+" ");
+        System.out.print(Dashboard.hitungtbt_belumapprove("201506", "22520")+" ");
+        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22520"));
+        
+        System.out.print(Dashboard.hitungtbt("201506", "22530")+" ");
+        System.out.print(Dashboard.hitungtbt_belumcek("201506", "22530")+" ");
+        System.out.print(Dashboard.hitungtbt_sudahcek("201506", "22530")+" ");
+        System.out.print(Dashboard.hitungtbt_belumapprove("201506", "22530")+" ");
+        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22530"));
+
+        System.out.print(Dashboard.hitungtbt("201506", "22540")+" ");
+        System.out.print(Dashboard.hitungtbt_belumcek("201506", "22540")+" ");
+        System.out.print(Dashboard.hitungtbt_sudahcek("201506", "22540")+" ");
+        System.out.print(Dashboard.hitungtbt_belumapprove("201506", "22540")+" ");
+        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22540"));
+
+        System.out.print(Dashboard.hitungtbt("201506", "22550")+" ");
+        System.out.print(Dashboard.hitungtbt_belumcek("201506", "22550")+" ");
+        System.out.print(Dashboard.hitungtbt_sudahcek("201506", "22550")+" ");
+        System.out.print(Dashboard.hitungtbt_belumapprove("201506", "22550")+" ");
+        System.out.println(Dashboard.hitungtbt_sudahapprove("201506", "22550"));
+
+      //  query4List();
 
 
         //   query4List();

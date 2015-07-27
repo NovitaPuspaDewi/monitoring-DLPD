@@ -80,10 +80,10 @@
                                     <th>ALAMAT</th>
                                     <th>TARIF</th>
                                     <th>DAYA</th> 
+                                    <th>UNITUP</th>
                                     <th>KWH MAKS</th>
                                     <th>TOTAL KWH</th>
                                     <th>STATUS MONITORING</th>
-                                    <th>KOORDINAT</th>
                                     <th>VERIFIKASI</th>
                                     <th>TANGGAL MONITORING</th>
                                 </tr>
@@ -100,6 +100,7 @@
                                     <td><%= kendaraanList.get(i).getmAlamat()%></td>
                                     <td><%= kendaraanList.get(i).getmTarif()%></td>
                                     <td><%= kendaraanList.get(i).getmDaya()%></td>
+                                     <td><%= kendaraanList.get(i).getmUnitup()%></td>
                                     <td><%= kendaraanList.get(i).getmKwhMaks()%></td>
                                     <td><%= kendaraanList.get(i).getmKwhTot()%></td>
                                     <% status = kendaraanList.get(i).getmStatus();
@@ -109,12 +110,7 @@
                                     <td>  <i class="checkmark icon"></i></td>
                                     <%  }%>
 
-                                    <% status = kendaraanList.get(i).getmKoordinat();
-                                        if (status == null) {
-                                            status = "Belum Cek";
-                                        }
-                                    %>
-                                    <td><%=status%></td>
+                                    
                                     <% status = kendaraanList.get(i).getmVerifikasi();
                                         if (status == null) {
                                             status = "Belum Verifikasi";
