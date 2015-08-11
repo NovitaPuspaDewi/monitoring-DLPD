@@ -20,7 +20,7 @@
             String hostName = "127.0.0.1";
             String username = "operator";
             String password = "14147";
-            String location = "C:\\Users\\NOVITA\\Pictures\\harga2.JPG";
+            String location = "C:\\Users\\NOVITA\\Pictures\\capture.JPG";
 
             String path = request.getParameter("file");
             session.setAttribute("path", path);

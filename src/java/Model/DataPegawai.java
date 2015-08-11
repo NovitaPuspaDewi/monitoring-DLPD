@@ -142,8 +142,7 @@ public class DataPegawai {
         String sql = "SELECT * FROM USER_LOGIN WHERE username = \'" + pUsername + "\'";
 
         //   JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        List<DataPegawai> pegawaiList = new ArrayList<DataPegawai>();
-        pegawaiList = jdbcTemplate.query(sql, new PegawaiRowMapper());
+        List<DataPegawai> pegawaiList = jdbcTemplate.query(sql, new DataPegawai.PegawaiRowMapper());
 
         if (!pegawaiList.isEmpty()) {
             String username = pegawaiList.get(0).getmUsernamePegawai();
@@ -163,40 +162,37 @@ public class DataPegawai {
                         return 3;
                     }
                 } else if (kode.equals(Kode.Kapuas)) {
-                     if (role.equals(Role.OPERATOR)) {
+                    if (role.equals(Role.OPERATOR)) {
                         return 30;
                     } else if (role.equals(Role.ADMIN)) {
                         return 20;
                     }
-                }else if (kode.equals(Kode.PP)) {
-                     if (role.equals(Role.OPERATOR)) {
+                } else if (kode.equals(Kode.PP)) {
+                    if (role.equals(Role.OPERATOR)) {
                         return 31;
                     } else if (role.equals(Role.ADMIN)) {
                         return 21;
                     }
-                }
-                else if (kode.equals(Kode.Buntok)) {
-                     if (role.equals(Role.OPERATOR)) {
+                } else if (kode.equals(Kode.Buntok)) {
+                    if (role.equals(Role.OPERATOR)) {
                         return 32;
                     } else if (role.equals(Role.ADMIN)) {
                         return 22;
                     }
-                }
-                else if (kode.equals(Kode.TL)) {
-                     if (role.equals(Role.OPERATOR)) {
+                } else if (kode.equals(Kode.TL)) {
+                    if (role.equals(Role.OPERATOR)) {
                         return 33;
                     } else if (role.equals(Role.ADMIN)) {
                         return 23;
                     }
-                }
-                else if (kode.equals(Kode.MT)) {
-                     if (role.equals(Role.OPERATOR)) {
+                } else if (kode.equals(Kode.MT)) {
+                    if (role.equals(Role.OPERATOR)) {
                         return 34;
                     } else if (role.equals(Role.ADMIN)) {
                         return 24;
                     }
-                }else if (kode.equals(Kode.PC)) {
-                     if (role.equals(Role.OPERATOR)) {
+                } else if (kode.equals(Kode.PC)) {
+                    if (role.equals(Role.OPERATOR)) {
                         return 35;
                     } else if (role.equals(Role.ADMIN)) {
                         return 25;
@@ -210,6 +206,7 @@ public class DataPegawai {
             System.out.println("UNREGISTERED USERNAME");
             return 0;
         }
+
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
         return -1;
 

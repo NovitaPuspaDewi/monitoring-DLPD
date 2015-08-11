@@ -19,55 +19,25 @@
         if (request.getParameter("commit") != null) {
 
             String id = request.getParameter("commit");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
-            String tgl = null;
-            String verifikasi = null;
-            String petugas_upload = null;
-            String koordinat = null;
+            String link="data-approve-semua-kwh-0-rayon.jsp";
+            
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            List<Approve_Rayon> data = Approve_Rayon.getDataListCekPelanggan_kwh0(idpel);
-            for (int i = 0; i < data.size(); i++) {
-                if (i == data.size() - 1) {
-                    tgl = data.get(i).getmTgl_Monitoring();
-                    verifikasi = data.get(i).getmVerifikasi();
-                    petugas_upload = data.get(i).getmPetugas_Upload();
-                    koordinat = data.get(i).getmKoordinat();
-                }
-            }
-
-            if (data.size() != 0) {
-                Approve_Rayon app = new Approve_Rayon();
-                app.setmPetugas_Approve(session.getAttribute("name").toString());
-                app.setmIdpel(idpel);
-                app.setmBlth(blth);
-                app.setmTgl_Monitoring(tgl);
-                app.setmVerifikasi(verifikasi);
-                app.setmPetugas_Upload(petugas_upload);
-                app.setmKoordinat(koordinat);
-
-                Approve_Rayon.Approve_Langsung(app);
-                response.sendRedirect("data-approve-semua-kwh-0-rayon.jsp");
-            } else {
-                session.setAttribute("id", idpel);
-                session.setAttribute("blth", blth);
-                response.sendRedirect("gagal-approve-kwh-0-rayon.jsp");
-            }
+            response.sendRedirect("detail-copy-status-kwh-0-rayon.jsp");
+            
         }
 
         if (request.getParameter("commit1") != null) {
             String id = request.getParameter("commit1");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
+            String link="data-approve-semua-kwh-0-rayon.jsp";
+            
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            Approve_Rayon app = new Approve_Rayon();
-            app.setmPetugas_Approve(session.getAttribute("name").toString());
-            app.setmIdpel(idpel);
-            app.setmBlth(blth);
-            Approve_Rayon.Approve_Biasa(app);
-            response.sendRedirect("data-approve-semua-kwh-0-rayon.jsp");
+            response.sendRedirect("detail-kwh-0-sudah-cek-rayon.jsp");
         }
-
+        
         if (request.getParameter("tampil") != null) {
             response.sendRedirect("tampil-data-yang-sama-kwh-0-rayon.jsp");
         }
@@ -160,9 +130,9 @@
                                             if ((kendaraanList.get(i).getmStatusApprove() != null) && (kendaraanList.get(i).getmStatus() != null)) {%>
                                         <td>  <i class="checkmark icon"></i></td>  
                                         <%} else if ((kendaraanList.get(i).getmStatus() != null) && (kendaraanList.get(i).getmStatusApprove() == null)) {%>
-                                        <td><center><input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
+                                        <td><center><i>Sudah dimonitor, klik untuk approve</i><br><input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
                                         <%} else {%>
-                                <td><center><input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
+                                <td><center><i>Belum monitor, copy status bulan terakhir</i><br> <input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
                                     <%}%>
                                 </tr>
                                 <% }%>

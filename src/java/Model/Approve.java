@@ -37,6 +37,7 @@ public class Approve {
     private String mKoordinat;
     private String mUnitup;
     private String mTgl_Approve;
+    private String mFoto;
     private static JdbcTemplate jdbcTemplate = new JdbcTemplate(DatabaseConnection.getmDataSource());
 
     public String getmAlamat() {
@@ -183,6 +184,14 @@ public class Approve {
         this.mTgl_Approve = mTgl_Approve;
     }
 
+    public String getmFoto() {
+        return mFoto;
+    }
+
+    public void setmFoto(String mFoto) {
+        this.mFoto = mFoto;
+    }
+
     public static class ApproveRowMapper implements RowMapper<Approve> {
 
         @Override
@@ -215,6 +224,7 @@ public class Approve {
             data.setmKoordinat(rs.getString(15));
             data.setmUnitup(rs.getString(16));
             data.setmTgl_Approve(rs.getString(17));
+            data.setmFoto(rs.getString(18));
 
             return data;
         }
@@ -224,7 +234,7 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh=0 order by idpel,blth";
 
@@ -233,12 +243,40 @@ public class Approve {
 
         return list;
     }
-    
+
+    public static List<Approve> getDetailApprove_0(String pBlth, String pIdpel) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
+                + "from dpm "
+                + "where totkwh=0 and idpel ='" + pIdpel + "' and blth='" + pBlth + "' order by idpel,blth";
+
+        List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<Approve> getDetailApprove_Maks(String pBlth, String pIdpel) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
+                + "from dpm "
+                + "where totkwh>kwh_maks and idpel ='" + pIdpel + "' and blth='" + pBlth + "' order by idpel,blth";
+
+        List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
     public static List<Approve> getDataListCekSemua_Kwh0(String pUnitup) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh=0 AND unitup='" + pUnitup + "' order by idpel,blth ";
 
@@ -247,12 +285,12 @@ public class Approve {
 
         return list;
     }
-    
+
     public static List<Approve> getDataListCekSemua_KwhMaks(String pUnitup) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND unitup='" + pUnitup + "' order by idpel,blth ";
 
@@ -266,7 +304,7 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh>kwh_maks order by idpel,blth";
 
@@ -280,7 +318,7 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND approve is null AND status_monitoring is not null"
                 + " order by idpel,blth";
@@ -295,9 +333,39 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh=0 AND approve is null AND status_monitoring is not null "
+                + "order by idpel,blth";
+
+        List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<Approve> getDataListCekSemua_Kwh0_belumApprove(String pBlth) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
+                + "from dpm "
+                + "where totkwh=0 AND approve is null AND status_monitoring is not null AND blth='" + pBlth + "' "
+                + "order by idpel,blth";
+
+        List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<Approve> getDataListCekSemua_Kwhmaks_belumApprove(String pBlth) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
+                + "from dpm "
+                + "where totkwh>kwh_maks AND approve is null AND status_monitoring is not null AND blth='" + pBlth + "' "
                 + "order by idpel,blth";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
@@ -309,10 +377,10 @@ public class Approve {
     public static List<Approve> getDataListCekSemua_Kwh0_SudahApprove() {
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh=0 AND approve is not null "
-                + "order by idpel,blth";
+                + "order by tgl_approve desc,idpel";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -324,24 +392,24 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND approve is not null "
-                + "order by idpel,blth";
+                + "order by tgl_approve desc,idpel";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
 
         return list;
     }
-    
+
     public static List<Approve> getDataListCekSemua_Kwh0_SudahApprove(String pBlth) {
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh=0 AND approve is not null AND blth='" + pBlth + "'"
-                + "order by idpel,blth";
+                + "order by tgl_approve desc,idpel";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -353,10 +421,10 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND approve is not null AND blth='" + pBlth + "'"
-                + "order by idpel,blth";
+                + "order by tgl_approve desc,idpel";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -367,7 +435,7 @@ public class Approve {
     public static List<Approve> getDataListCekData_Yang_Sama_Kwh0() {
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where idpel in (select distinct idpel from dpm where approve is not null and totkwh=0)"
                 + " and approve is null and totkwh=0 "
@@ -382,7 +450,7 @@ public class Approve {
     public static List<Approve> getDataListCekData_Yang_Sama_KwhMaks() {
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where idpel in (select distinct idpel from dpm where approve is not null and totkwh>kwh_maks)"
                 + " and approve is null and totkwh>kwh_maks "
@@ -534,6 +602,7 @@ public class Approve {
 
     }
     //BARU
+
     public static int hitungApprove_sudahcek_0_unitup(String pUnitup) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
@@ -552,6 +621,7 @@ public class Approve {
 
     }
     //BARU
+
     public static int hitungApprove_belumcek_0_unitup(String pUnitup) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
@@ -570,7 +640,8 @@ public class Approve {
 
     }
     //BARU
-     public static int hitungApprove_sudahcek_maks_unitup(String pUnitup) {
+
+    public static int hitungApprove_sudahcek_maks_unitup(String pUnitup) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
@@ -587,7 +658,7 @@ public class Approve {
         return count;
 
     }
-     
+
     //BARU
     public static int hitungApprove_belumcek_maks_unitup(String pUnitup) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
@@ -606,9 +677,8 @@ public class Approve {
         return count;
 
     }
-    
-  
-     public static int hitungApprove_sudahcek_maks(String pBlth) {
+
+    public static int hitungApprove_sudahcek_maks(String pBlth) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
@@ -625,9 +695,8 @@ public class Approve {
         return count;
 
     }
-     
-         
-     public static int hitungApprove_sudahcek_0(String pBlth) {
+
+    public static int hitungApprove_sudahcek_0(String pBlth) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
@@ -676,9 +745,9 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
-                + "where totkwh=0 and status_monitoring is not null and "
+                + "where totkwh=0 and approve is not null and "
                 + "idpel='" + pIdpel + "' order by idpel,blth";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
@@ -691,9 +760,9 @@ public class Approve {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
-                + "where totkwh>kwh_maks and status_monitoring is not null"
+                + "where totkwh>kwh_maks and approve is not null"
                 + " and idpel='" + pIdpel + "' order by idpel,blth";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
@@ -702,14 +771,15 @@ public class Approve {
         return list;
     }
     //BARU
+
     public static List<Approve> getDataListCekApprove_blth_kwh0(String pBlth) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh=0 and approve is not null and "
-                + "tgl_approve LIKE '%" + pBlth + "%' order by idpel,blth";
+                + "tgl_approve LIKE '%" + pBlth + "%' order by tgl_approve desc,idpel";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -717,21 +787,21 @@ public class Approve {
         return list;
     }
     //BARU
+
     public static List<Approve> getDataListCekApprove_blth_kwhMaks(String pBlth) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring, "
-                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve "
+                + "verifikasi,petugas_upload,approve,petugas_verifikasi,tgl_monitor,koordinat,unitup,tgl_approve,foto "
                 + "from dpm "
                 + "where totkwh>kwh_maks and approve is not null and "
-                + "tgl_approve LIKE '%" + pBlth + "%' order by idpel,blth";
+                + "tgl_approve LIKE '%" + pBlth + "%' order by tgl_approve desc,idpel";
 
         List<Approve> list = jdbcTemplate.query(sql, new Approve.ApproveRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
 
         return list;
     }
-
 
     public static void Approve_Biasa(Approve pelanggan) {
         // DataSource datasorce = DatabaseConnection.getmDataSource();
@@ -747,10 +817,24 @@ public class Approve {
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
     }
 
+    public static void Approve_Biasa_TBT(Approve pelanggan) {
+        // DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update tbt set PETUGAS_VERIFIKASI=?, approve='OK', tgl_approve=(to_char(sysdate, 'dd-mm-yyyy')) where idpel=? and blth=?";
+
+        //JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmPetugas_Approve(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
     public static void Approve_Langsung(Approve pelanggan) {
         //DataSource datasorce = DatabaseConnection.getmDataSource();
         String sql = "update DPM set PETUGAS_VERIFIKASI=?, approve='OK', status_monitoring='SUDAH MONITORING',"
-                + " tgl_monitor=?, petugas_upload=?, verifikasi=?, koordinat=?, tgl_approve=(to_char(sysdate, 'dd-mm-yyyy')) where idpel=? and blth=?";
+                + " tgl_monitor=?, petugas_upload=?, verifikasi=?, koordinat=?,foto=?, tgl_approve=(to_char(sysdate, 'dd-mm-yyyy')) where idpel=? and blth=?";
 
         // JdbcTemplate jdbc = new JdbcTemplate(datasorce);
         jdbcTemplate.update(sql, new Object[]{
@@ -759,10 +843,125 @@ public class Approve {
                     pelanggan.getmPetugas_Upload(),
                     pelanggan.getmVerifikasi(),
                     pelanggan.getmKoordinat(),
+                    pelanggan.getmFoto(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+        System.out.println("updated");
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
+    public static void Approve_Langsung_tbt(Approve pelanggan) {
+        //DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update TBT set PETUGAS_VERIFIKASI=?, approve='OK', status_monitoring='SUDAH MONITORING',"
+                + " tgl_monitor=?, petugas_upload=?, verifikasi=?, koordinat=?, foto=?, tgl_approve=(to_char(sysdate, 'dd-mm-yyyy')) where idpel=? and blth=?";
+
+        // JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmPetugas_Approve(),
+                    pelanggan.getmTgl_Monitoring(),
+                    pelanggan.getmPetugas_Upload(),
+                    pelanggan.getmVerifikasi(),
+                    pelanggan.getmKoordinat(),
+                    pelanggan.getmFoto(),
                     pelanggan.getmIdpel(),
                     pelanggan.getmBlth()
                 });
 
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
+    public static void sudah_monitor_dpm(Approve pelanggan) {
+        // DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update DPM set status_monitoring='SUDAH MONITORING', tgl_monitor=?,"
+                + " petugas_upload=?, verifikasi=?, koordinat=? where idpel=? and blth=?";
+
+        //JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmTgl_Monitoring(),
+                    pelanggan.getmPetugas_Upload(),
+                    pelanggan.getmVerifikasi(),
+                    pelanggan.getmKoordinat(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
+    public static void sudah_monitor_tbt(Approve pelanggan) {
+        // DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update TBT set status_monitoring='SUDAH MONITORING', tgl_monitor=?,"
+                + " petugas_upload=?, verifikasi=?, koordinat=? where idpel=? and blth=?";
+
+        //JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmTgl_Monitoring(),
+                    pelanggan.getmPetugas_Upload(),
+                    pelanggan.getmVerifikasi(),
+                    pelanggan.getmKoordinat(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
+    public static void simpan_foto_dpm(Approve pelanggan) {
+        // DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update dpm set foto=? where idpel=? and blth=?";
+
+        //JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmFoto(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
+    public static void simpan_foto_tbt(Approve pelanggan) {
+        // DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update tbt set foto=? where idpel=? and blth=?";
+
+        //JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmFoto(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+
+    public static void Batal_Approve(Approve pelanggan) {
+        //DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update DPM set approve=null, status_monitoring=null,"
+                + " verifikasi=? where idpel=? and blth=?";
+
+        // JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmVerifikasi(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+        System.out.println("updated");
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+    }
+    
+    public static void Batal_Approve_TBT(Approve pelanggan) {
+        //DataSource datasorce = DatabaseConnection.getmDataSource();
+        String sql = "update TBT set approve=null, status_monitoring=null,"
+                + " verifikasi=? where idpel=? and blth=?";
+
+        // JdbcTemplate jdbc = new JdbcTemplate(datasorce);
+        jdbcTemplate.update(sql, new Object[]{
+                    pelanggan.getmVerifikasi(),
+                    pelanggan.getmIdpel(),
+                    pelanggan.getmBlth()
+                });
+        System.out.println("updated");
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
     }
 }

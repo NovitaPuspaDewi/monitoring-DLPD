@@ -35,7 +35,8 @@
         }
 
         if (request.getParameter("commit1") != null) {
-            session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("id_blth", request.getParameter("commit1"));
+             session.setAttribute("link", "data-kwh-0-cek-bulan-rayon.jsp");
             response.sendRedirect("kwh0-sudah-cek-rayon.jsp");
         }
     %>
@@ -112,7 +113,7 @@
                     <div class="row">
                         <div class="ten wide column">
                             <h4 class="ui top attached center aligned inverted red block header">
-                                DATA PELANGGAN KWH 0 UNITUP ${username}
+                                DATA PELANGGAN KWH 0 ${blth} UNITUP ${username}
                             </h4>
                             <table class="ui padded table segment attached" id="filmTable">
                                 <thead>

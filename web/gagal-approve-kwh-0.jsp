@@ -15,6 +15,8 @@
         String idpel = session.getAttribute("id").toString();
         String blth = session.getAttribute("blth").toString();
         String id_blth = blth + idpel;
+        String link = session.getAttribute("link").toString();
+
 
         if (request.getParameter("submit") != null) {
             session.setAttribute("id_blth", id_blth);
@@ -24,7 +26,7 @@
         if (request.getParameter("commit") != null) {
             session.removeAttribute("id");
             session.removeAttribute("blth");
-            response.sendRedirect("data-approve-semua-kwh-0.jsp");
+            response.sendRedirect(link);
         }
     %>
     <head>

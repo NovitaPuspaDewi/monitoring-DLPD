@@ -16,6 +16,7 @@
 
         if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("link", "data-kwh-maks-belum-cek.jsp");
             response.sendRedirect("kwh-maks-belum-cek.jsp");
         }
 

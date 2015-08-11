@@ -17,56 +17,26 @@
         int count_belum = Approve.hitungApprove_belumcek_0_unitup(unit);
         String status = null;
 
-        if (request.getParameter("commit") != null) {
+      if (request.getParameter("commit") != null) {
 
             String id = request.getParameter("commit");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
-            String tgl = null;
-            String verifikasi = null;
-            String petugas_upload = null;
-            String koordinat = null;
+            String link="tampil-data-approve-semua-kwh-0-unitup.jsp";
+            
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            List<Approve> data = Approve.getDataListCekPelanggan_kwh0(idpel);
-            for (int i = 0; i < data.size(); i++) {
-                if (i == data.size() - 1) {
-                    tgl = data.get(i).getmTgl_Monitoring();
-                    verifikasi = data.get(i).getmVerifikasi();
-                    petugas_upload = data.get(i).getmPetugas_Upload();
-                    koordinat = data.get(i).getmKoordinat();
-                }
-            }
-
-            if (data.size() != 0) {
-                Approve app = new Approve();
-                app.setmPetugas_Approve(session.getAttribute("name").toString());
-                app.setmIdpel(idpel);
-                app.setmBlth(blth);
-                app.setmTgl_Monitoring(tgl);
-                app.setmVerifikasi(verifikasi);
-                app.setmPetugas_Upload(petugas_upload);
-                app.setmKoordinat(koordinat);
-
-                Approve.Approve_Langsung(app);
-                response.sendRedirect("tampil-data-approve-semua-kwh-0-unitup.jsp");
-            } else {
-                session.setAttribute("id", idpel);
-                session.setAttribute("blth", blth);
-                response.sendRedirect("gagal-approve-kwh-0.jsp");
-            }
+            response.sendRedirect("detail-copy-status-kwh-0.jsp");
+            
         }
 
         if (request.getParameter("commit1") != null) {
             String id = request.getParameter("commit1");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
+            String link="tampil-data-approve-semua-kwh-0-unitup.jsp";
+            
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            Approve app = new Approve();
-            app.setmPetugas_Approve(session.getAttribute("name").toString());
-            app.setmIdpel(idpel);
-            app.setmBlth(blth);
-            Approve.Approve_Biasa(app);
-            response.sendRedirect("tampil-data-approve-semua-kwh-0-unitup.jsp");
+            response.sendRedirect("detail-kwh-0-sudah-cek.jsp");
         }
 
         if (request.getParameter("cari2") != null) {
@@ -187,9 +157,9 @@
                                             if ((kendaraanList.get(i).getmStatusApprove() != null) && (kendaraanList.get(i).getmStatus() != null)) {%>
                                         <td>  <i class="checkmark icon"></i></td>  
                                         <%} else if ((kendaraanList.get(i).getmStatus() != null) && (kendaraanList.get(i).getmStatusApprove() == null)) {%>
-                                        <td><center><i>Silakan klik untuk Approve</i><br><input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
+                                        <td><center><i>Sudah monitor,klik untuk approve</i><br><input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
                                         <%} else {%>
-                                <td><center><i>Klik untuk Approve<i><br><input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
+                                <td><center><i>Copy status bulan terakhir</i><br><input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
                                             <%}%>
                                             </tr>
                                             <% }%>

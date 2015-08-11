@@ -31,6 +31,9 @@ public class LihatData_Rayon {
     private int mKwhMaks;
     private int mKwhTot;
     private String mApprove;
+    private String mVerifikasi;
+    private String mKoordinat;
+    private String mTglMonitor;
     private static JdbcTemplate jdbcTemplate = new JdbcTemplate(DatabaseConnection.getmDataSource());
 
     public String getmAlamat() {
@@ -121,6 +124,30 @@ public class LihatData_Rayon {
         this.mApprove = mApprove;
     }
 
+    public String getmKoordinat() {
+        return mKoordinat;
+    }
+
+    public void setmKoordinat(String mKoordinat) {
+        this.mKoordinat = mKoordinat;
+    }
+
+    public String getmTglMonitor() {
+        return mTglMonitor;
+    }
+
+    public void setmTglMonitor(String mTglMonitor) {
+        this.mTglMonitor = mTglMonitor;
+    }
+
+    public String getmVerifikasi() {
+        return mVerifikasi;
+    }
+
+    public void setmVerifikasi(String mVerifikasi) {
+        this.mVerifikasi = mVerifikasi;
+    }
+        
     public static class LihatDataRowMapper implements RowMapper<LihatData_Rayon> {
 
         @Override
@@ -147,6 +174,9 @@ public class LihatData_Rayon {
             data.setmStatus(rs.getString(9));
             data.setmUnitup(rs.getString(10));
             data.setmApprove(rs.getString(11));
+            data.setmVerifikasi(rs.getString(12));
+            data.setmKoordinat(rs.getString(13));
+            data.setmTglMonitor(rs.getString(14));
 
             return data;
         }
@@ -155,7 +185,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataListKwh0(String pBlth, String pUnitup) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND blth='" + pBlth + "' AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -168,7 +198,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataListKwh0_Semua(String pUnitup) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -181,7 +211,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataListKwhMaks_Semua(String pUnitup) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -194,7 +224,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataListKwhMaks(String pBlth, String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND blth='" + pBlth + "' AND unitup= '" + pUnitup + "' order by idpel,blth";
 
@@ -208,7 +238,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataList_ByUsername_kwhMaks(String pIdpel) {
         //  DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND idpel='" + pIdpel + "' order by idpel,blth";
 
@@ -221,7 +251,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataList_ByUsername_kwh0(String pIdpel) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND idpel='" + pIdpel + "' order by idpel,blth";
 
@@ -235,7 +265,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataList_ByUsername_belumcek_kwh0(String pIdpel, String pBlth) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND idpel='" + pIdpel + "' AND blth='" + pBlth + "' order by idpel,blth";
 
@@ -249,7 +279,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataList_ByUsername_belumcek_kwhmaks(String pIdpel, String pBlth) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND idpel='" + pIdpel + "' AND blth='" + pBlth + "' order by idpel,blth";
 
@@ -263,7 +293,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataList_kwh0_belum_cek(String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND status_monitoring is null AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -277,7 +307,7 @@ public class LihatData_Rayon {
     public static List<LihatData_Rayon> getDataList_kwhmaks_belum_cek(String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND status_monitoring is null AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -390,14 +420,14 @@ public class LihatData_Rayon {
     }
 
     //baru
-    public static List<LihatData> getDataList_kwhmaks_sudah_cek(String pUnitup) {
+    public static List<LihatData_Rayon> getDataList_kwhmaks_sudah_cek(String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND status_monitoring is not null AND unitup='" + pUnitup + "' order by idpel,blth";
 
-        List<LihatData> list = jdbcTemplate.query(sql, new LihatData.LihatDataRowMapper());
+        List<LihatData_Rayon> list = jdbcTemplate.query(sql, new LihatData_Rayon.LihatDataRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
 
         return list;
@@ -408,7 +438,7 @@ public class LihatData_Rayon {
     public static List<LihatData> getDataList_kwhmaks_sudah_cek(String pBlth, String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND status_monitoring is not null AND blth='" + pBlth + "' AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -420,14 +450,14 @@ public class LihatData_Rayon {
     }
 
     //baru
-    public static List<LihatData> getDataList_kwh0_sudah_cek(String pUnitup) {
+    public static List<LihatData_Rayon> getDataList_kwh0_sudah_cek(String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND status_monitoring is not null AND unitup='" + pUnitup + "' order by idpel,blth";
 
-        List<LihatData> list = jdbcTemplate.query(sql, new LihatData.LihatDataRowMapper());
+        List<LihatData_Rayon> list = jdbcTemplate.query(sql, new LihatData_Rayon.LihatDataRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
 
         return list;
@@ -438,7 +468,7 @@ public class LihatData_Rayon {
     public static List<LihatData> getDataList_kwh0_sudah_cek(String pBlth, String pUnitup) {
         // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,unitup,approve,verifikasi,koordinat,tgl_monitor  "
                 + "from dpm "
                 + "where totkwh=0 AND status_monitoring is not null AND blth='" + pBlth + "' AND unitup='" + pUnitup + "' order by idpel,blth";
 
@@ -510,6 +540,42 @@ public class LihatData_Rayon {
 
         String sql = "select count(idpel) from dpm where totkwh>kwh_maks AND status_monitoring is not null"
                 + " AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+    
+    public static int hitungKwh0_sudahcek(String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from dpm where totkwh=0 AND status_monitoring is not null"
+                + " AND unitup='" + pUnitup + "'";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungKwhmaks_sudahcek( String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from dpm where totkwh>kwh_maks AND status_monitoring is not null"
+                + " AND unitup='" + pUnitup + "'";
         //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
 
         try {

@@ -33,6 +33,7 @@
 
         if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
+             session.setAttribute("link", "data-sudah-approve-kwh-maks-cek-bulan-rayon.jsp");
             response.sendRedirect("detail-approve-kwh-maks-rayon.jsp");
         }
 

@@ -4,14 +4,31 @@
     Author     : NOVITA
 --%>
 
+<%@page import="Model.LihatData"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        int count = LihatData.hitungKwh0_sudahcek();
+        String status = null;
+
+        if (request.getParameter("commit") != null) {
+            session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("link", "data-kwh0-sudah-cek.jsp");
+            response.sendRedirect("kwh0-sudah-cek.jsp");
+        }
+
+        if (request.getParameter("cari2") != null) {
+            String unitup = request.getParameter("unitup");
+            session.setAttribute("unitup", unitup);
+            response.sendRedirect("data-kwh0-sudah-cek-cari-unitup.jsp");
+        }
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Data Pelanggan Kwh 0 Sudah Cek</title>
+        <title>Data Pelanggan Kwh 0 Belum Cek</title>
         <link href="semantic/packaged/css/semantic.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="img/logo_PLN.jpg" type="image/jpg">
     </head>
@@ -29,75 +46,92 @@
                         Info!
                     </div>
                     <p>
-                        <b>230</b> data pelanggan kwh 0 yang sudah dimonitoring
-
+                        <b><%=count%></b> data pelanggan kwh 0 yang sudah dimonitoring<br><br>
+                    <div class="ui fluid form segment">
+                        <form id="search_unitup">
+                            <div class=" four fields">
+                                <div class="field">
+                                    <label> Masukkan UNITUP</label>
+                                    <div class="ui selection dropdown">
+                                        <input type="hidden" name="unitup">
+                                        <div class="default text">...</div>
+                                        <i class="dropdown icon"></i>
+                                        <div class="menu">
+                                            <div class="item" data-value="22500">KAPUAS</div>
+                                            <div class="item" data-value="22510">PULANG PISAU</div>
+                                            <div class="item" data-value="22520">BUNTOK</div>
+                                            <div class="item" data-value="22530">TAMIANG LAYANG</div>
+                                            <div class="item" data-value="22540">MUARA TEWEH</div>
+                                            <div class="item" data-value="22550">PURUK CAHU</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label> Klik untuk mulai pencarian</label>
+                                    <input class="ui tiny red button" type="submit" value="CARI" name="cari2">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     </p>
                 </div>
             </div>
         </div>
         <br><br>
         <div class="column">
-            <div class="ui fluid form segment">
-                <div class="row">
-                    <div class="ten wide column">
-                        <h4 class="ui top attached center aligned inverted red block header">
-                            DATA PELANGGAN KWH 0 SUDAH CEK
-                        </h4>
-                        <table class="ui padded table segment attached" id="filmTable">
-                            <thead>
-                                <tr>
-                                    <th>BLTH</th>
-                                    <th>ID PELANGGAN</th>
-                                    <th>NAMA</th>
-                                    <th>ALAMAT</th>
-                                    <th>TARIF</th>
-                                    <th>DAYA</th> 
-                                    <th>KWH MAKS</th>
-                                    <th>TOTAL KWH</th>
-                                    <th>FOTO</th>
-                                    <th>VERIFIKASI</th>
-                                    <th>DETAIL</th>
+            <form>
+                <div class="ui fluid form segment">
+                    <div class="row">
+                        <div class="ten wide column">
+                            <h4 class="ui top attached center aligned inverted red block header">
+                                DATA PELANGGAN KWH 0 SUDAH CEK
+                            </h4>
+                            <table class="ui padded table segment attached" id="filmTable">
+                                <thead>
+                                    <tr>
+                                        <th>BLTH</th>
+                                        <th>ID PELANGGAN</th>
+                                        <th>NAMA</th>
+                                        <th>ALAMAT</th>
+                                        <th>TARIF</th>
+                                        <th>DAYA</th> 
+                                        <th>KWH MAKS</th>
+                                        <th>TOTAL KWH</th>
+                                        <th>TGL MONITORING</th>
+                                        <th>LIHAT DETAIL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        List<LihatData> kendaraanList = LihatData.getDataList_kwh0_sudah_cek();
+                                        for (int i = 0; i < kendaraanList.size(); i++) {
+                                    %>
+
+                                    <tr>
+                                        <td><%= kendaraanList.get(i).getmBlth()%></td>
+                                        <td><%= kendaraanList.get(i).getmIdpel()%></td>
+                                        <td><%= kendaraanList.get(i).getmNama()%></td>
+                                        <td><%= kendaraanList.get(i).getmAlamat()%></td>
+                                        <td><%= kendaraanList.get(i).getmTarif()%></td>
+                                        <td><%= kendaraanList.get(i).getmDaya()%></td>
+                                        <td><%= kendaraanList.get(i).getmKwhMaks()%></td>
+                                        <td><%= kendaraanList.get(i).getmKwhTot()%></td>
+                                        <td><%= kendaraanList.get(i).getmTglMonitor()%></td>
+                                        <%String id = kendaraanList.get(i).getmIdpel();
+                                            String blth = kendaraanList.get(i).getmBlth();
+                                            String id_blth = blth + id;%>
+                                        <td><center><input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    for (int i = 0; i < 10; i++) {
-                                %>
 
-                                <tr>
-                                    <td>201501</td>
-                                    <td>22500234590</td>
-                                    <td>JUNADI</td>
-                                    <td>JL.PATIH RUMBIH 20</td>
-                                    <td>R1T</td>
-                                    <td>900</td>
-                                    <td><%=0%></td>
-                                    <td>780</td>
-                                    <td><li><img height="200" width="200" src="img/kwh_1.jpg"></li></td>
-                            <td>Rumah Kosong</td>
-                            <td><center><input class="ui tiny red button" type="submit" value="LIHAT DETAIL" name="commit"></center></td>
-                            </tr>
-                            <tr>
-                                <td>201501</td>
-                                <td>22500234596</td>
-                                <td>AMINUDIN</td>
-                                <td>JL.KASTURI GG.4</td>
-                                <td>R1T</td>
-                                <td>450</td>
-                                <td><%=0%></td>
-                                <td>570</td>
-                                <td><li><img height="200" width="200" src="img/kwh_2.jpg"></li></td>
-                            <td>Pulsa sisa 40 ribu</td>
-                            <td><center><input class="ui tiny red button" type="submit" value="LIHAT DETAIL" name="commit"></center></td>
-                            </tr>
-                            <% }%>
+                                <% }%>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </form>
         </div>
 
         <!--Script-->
@@ -106,6 +140,30 @@
         <script src="date/jquery.plugin.js" type="text/javascript"></script>
         <script src="date/jquery.datepick.js" type="text/javascript"></script>
         <!--Local Script-->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                                                            
+                //Show dropdown on hover 
+                $('.ui.dropdown').dropdown({on: 'hover'});
+                
+                $("#search_unitup").form({
+                    password:
+                        {
+                        identifier: 'unitup',
+                        rules:
+                            [
+                            {type: 'empty', prompt: 'Masukkan unitup'}
+                               
+                        ]
+                    }
+                },
+                {
+                    on: 'submit',
+                    inline: 'true'
+                });
+            });
+        </script>
+
 
     </body>
 </html>

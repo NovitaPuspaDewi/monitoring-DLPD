@@ -29,8 +29,10 @@
         }
 
         if (request.getParameter("commit") != null) {
+            String link = "data-TBT-cek-approve-per-bulan.jsp";
+            session.setAttribute("link", link);
             session.setAttribute("id_blth", request.getParameter("commit"));
-            response.sendRedirect("approve-TBT.jsp");
+            response.sendRedirect("approve-tbt.jsp");
         }
 
         if (request.getParameter("commit1") != null) {
@@ -40,6 +42,7 @@
 
         if (request.getParameter("commit2") != null) {
             session.setAttribute("id_blth", request.getParameter("commit2"));
+            session.setAttribute("link", "data-TBT-cek-approve-per-bulan.jsp");
             response.sendRedirect("detail-approve-TBT.jsp");
         }
     %>
@@ -153,8 +156,8 @@
                                             String id_blth = blth + id;
                                             String cek = kendaraanList.get(i).getmStatus_Monitoring();
                                             status = kendaraanList.get(i).getmApprove();
-                                                                                   if ((status == null) && (cek != null)) {
-                                                                                       status = "Belum Approve, klik untuk Approve";%>
+                                            if ((status == null) && (cek != null)) {
+                                                status = "Belum Approve, klik untuk Approve";%>
                                         <td><center><%=status%><br>
                                     <input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
                                     <% } else if ((status == null) && (cek == null)) {

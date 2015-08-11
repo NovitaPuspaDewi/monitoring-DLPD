@@ -18,59 +18,28 @@
         if (request.getParameter("commit") != null) {
 
             String id = request.getParameter("commit");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
-            String tgl = null;
-            String verifikasi = null;
-            String petugas_upload = null;
-            String koordinat = null;
+            String link = "data-approve-semua-kwh-maks.jsp";
 
-            List<Approve> data = Approve.getDataListCekPelanggan_kwhMaks(idpel);
-            for (int i = 0; i < data.size(); i++) {
-                if (i == data.size() - 1) {
-                    tgl = data.get(i).getmTgl_Monitoring();
-                    verifikasi = data.get(i).getmVerifikasi();
-                    petugas_upload = data.get(i).getmPetugas_Upload();
-                    koordinat = data.get(i).getmKoordinat();
-                }
-            }
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            if (data.size() != 0) {
-                Approve app = new Approve();
-                app.setmPetugas_Approve(session.getAttribute("name").toString());
-                app.setmIdpel(idpel);
-                app.setmBlth(blth);
-                app.setmTgl_Monitoring(tgl);
-                app.setmVerifikasi(verifikasi);
-                app.setmPetugas_Upload(petugas_upload);
-                app.setmKoordinat(koordinat);
-
-                Approve.Approve_Langsung(app);
-                response.sendRedirect("data-approve-semua-kwh-maks.jsp");
-            } else {
-                session.setAttribute("id", idpel);
-                session.setAttribute("blth", blth);
-                response.sendRedirect("gagal-approve-kwh-maks.jsp");
-            }
+            response.sendRedirect("detail-copy-status-kwh-maks.jsp");
         }
 
         if (request.getParameter("commit1") != null) {
             String id = request.getParameter("commit1");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
+            String link = "data-approve-semua-kwh-maks.jsp";
 
-            Approve app = new Approve();
-            app.setmPetugas_Approve(session.getAttribute("name").toString());
-            app.setmIdpel(idpel);
-            app.setmBlth(blth);
-            Approve.Approve_Biasa(app);
-            response.sendRedirect("data-approve-semua-kwh-maks.jsp");
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
+
+            response.sendRedirect("detail-kwh-maks-sudah-cek.jsp");
         }
-
+        
         if (request.getParameter("tampil") != null) {
             response.sendRedirect("tampil-data-yang-sama-kwh-maks.jsp");
         }
-                
+
         if (request.getParameter("unitup") != null) {
             response.sendRedirect("data-approve-semua-kwh-maks-unitup.jsp");
         }
@@ -95,7 +64,7 @@
                         Info!
                     </div>
                     <p>
-                        <b><%=count_belum%></b> data pelanggan kwh 0 yang belum di-Approve,
+                        <b><%=count_belum%></b> data pelanggan kwh Maks yang belum di-Approve,
                         <b><%=count_sudah%></b> sudah di-Approve
                         <br><br>
                     <form>
@@ -112,7 +81,7 @@
                     <div class="row">
                         <div class="ten wide column">
                             <h4 class="ui top attached center aligned inverted red block header">
-                                DATA PELANGGAN KWH 0
+                                DATA PELANGGAN KWH MAKS
                             </h4>
                             <table class="ui padded table segment attached" id="filmTable">
                                 <thead>
@@ -163,9 +132,9 @@
                                             if ((kendaraanList.get(i).getmStatusApprove() != null) && (kendaraanList.get(i).getmStatus() != null)) {%>
                                         <td>  <i class="checkmark icon"></i></td>  
                                         <%} else if ((kendaraanList.get(i).getmStatus() != null) && (kendaraanList.get(i).getmStatusApprove() == null)) {%>
-                                        <td><center><input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
+                                        <td><center><i>Sudah dimonitor, klik untuk approve</i><br><input class="ui tiny blue button" type="submit" value="<%=id_blth%>" name="commit1"></center></td>
                                         <%} else {%>
-                                <td><center><input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
+                                <td><center><i>Belum monitor, copy status bulan terakhir</i><br> <input class="ui tiny red button" type="submit" value="<%=id_blth%>" name="commit"></center></td>
                                     <%}%>
                                 </tr>
                                 <% }%>

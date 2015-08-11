@@ -17,6 +17,7 @@
 
         if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("link", "data-kwh0-belum-cek-rayon.jsp");
             response.sendRedirect("kwh0-belum-cek-rayon.jsp");
         }
     %>

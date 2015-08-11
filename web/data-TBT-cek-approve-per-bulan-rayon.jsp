@@ -30,8 +30,10 @@
         }
 
         if (request.getParameter("commit") != null) {
+            String link="data-TBT-cek-approve-per-bulan-rayon.jsp";
+            session.setAttribute("link", link);
             session.setAttribute("id_blth", request.getParameter("commit"));
-            response.sendRedirect("approve-TBT-rayon.jsp");
+            response.sendRedirect("approve-tbt-rayon.jsp");
         }
 
         if (request.getParameter("commit1") != null) {
@@ -41,7 +43,8 @@
 
         if (request.getParameter("commit2") != null) {
             session.setAttribute("id_blth", request.getParameter("commit2"));
-            response.sendRedirect("detail-approve-TBT-rayon.jsp.jsp");
+            session.setAttribute("link", "data-TBT-cek-approve-per-bulan-rayon.jsp");
+            response.sendRedirect("detail-approve-TBT-rayon.jsp");
         }
     %>
 

@@ -3,7 +3,7 @@
     Created on : Nov 6, 2014, 5:10:04 PM
     Author     : NOVITA
 --%>
-<%@page import="Model.DataPegawai"%>
+<%@page import="Model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,8 +11,10 @@
         if (null != request.getParameter("commit")) {
             session = request.getSession(true);
             session.setMaxInactiveInterval(60 * 60 * 24);
+            
+            DataPegawai dataPegawai= new DataPegawai();
 
-            int login = DataPegawai.validateLoginCredential(request.getParameter("username"), request.getParameter("password"), request.getParameter("commit"), request.getParameter("kode"));
+            int login = dataPegawai.validateLoginCredential(request.getParameter("username"), request.getParameter("password"), request.getParameter("commit"), request.getParameter("kode"));
             switch (login) {
                 case 0:
                     out.print("<script type=\"text/javascript\">");

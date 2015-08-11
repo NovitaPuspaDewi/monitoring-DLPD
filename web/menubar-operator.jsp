@@ -22,7 +22,7 @@
                             <div class="column">
                                 <h4 class="ui header">Kwh 0</h4>
                                 <div class="ui link list">
-                                    <a class="item" >Sudah Cek</a>
+                                    <a class="item" href="data-kwh0-sudah-cek_1.jsp">Sudah Cek</a>
                                     <a class="item" href="data-kwh0-belum-cek_1.jsp" >Belum Cek</a>
                                     <a class="item" href="kwh-0-cek-per-bulan_1.jsp">Cek per-bulan</a>
                                 </div>
@@ -30,7 +30,7 @@
                             <div class="column">
                                 <h4 class="ui header">Kwh Maks</h4>
                                 <div class="ui link list">
-                                    <a class="item">Sudah Cek</a>
+                                    <a class="item" href="data-kwh-maks-sudah-cek_1.jsp">Sudah Cek</a>
                                     <a class="item" href="data-kwh-maks-belum-cek_1.jsp">Belum Cek</a>
                                     <a class="item" href="kwh-maks-cek-per-bulan_1.jsp">Cek per-bulan</a>
                                 </div>
@@ -38,9 +38,9 @@
                             <div class="column">
                                 <h4 class="ui header">PPTBT>3Bln</h4>
                                 <div class="ui link list">
-                                    <a class="item">Sudah Cek</a>
-                                    <a class="item">Belum Cek</a>
-                                    <a class="item">Cek per-bulan</a>
+                                    <a class="item" href="data-tbt-sudah-cek_1.jsp">Sudah Cek</a>
+                                    <a class="item" href="data-tbt-belum-cek_1.jsp">Belum Cek</a>
+                                    <a class="item" href="data-tbt-cek-bulan_1.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                         </div>

@@ -35,11 +35,13 @@
 
         if (request.getParameter("commit1") != null) {
             session.setAttribute("id_blth", request.getParameter("commit1"));
+            session.setAttribute("link", "data-kwh-0-cek-approve-per-bulan.jsp");
             response.sendRedirect("kwh0-belum-cek.jsp");
         }
 
         if (request.getParameter("commit2") != null) {
             session.setAttribute("id_blth", request.getParameter("commit2"));
+            session.setAttribute("link", "data-kwh-0-cek-approve-per-bulan.jsp");
             response.sendRedirect("detail-approve-kwh-0.jsp");
         }
     %>

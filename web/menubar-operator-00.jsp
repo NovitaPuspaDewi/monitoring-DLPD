@@ -22,32 +22,32 @@
                             <div class="column">
                                 <h4 class="ui header">Kwh 0</h4>
                                 <div class="ui link list">
-                                    <a class="item" >Sudah Cek</a>
-                                    <a class="item" href="data-kwh0-belum-cek_1-rayon.jsp" >Belum Cek</a>
-                                    <a class="item">Cek per-bulan</a>
+                                    <a class="item" href="data-kwh0-sudah-cek-rayon_1.jsp" >Sudah Cek</a>
+                                    <a class="item" href="data-kwh0-belum-cek-rayon_1.jsp" >Belum Cek</a>
+                                    <a class="item" href="kwh-0-cek-per-bulan_1-rayon.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                             <div class="column">
                                 <h4 class="ui header">Kwh Maks</h4>
                                 <div class="ui link list">
-                                    <a class="item">Sudah Cek</a>
-                                    <a class="item" href="data-kwh-maks-belum-cek_1-rayon.jsp">Belum Cek</a>
-                                    <a class="item">Cek per-bulan</a>
+                                    <a class="item" href="data-kwh-maks-sudah-cek-rayon_1.jsp">Sudah Cek</a>
+                                    <a class="item" href="data-kwh-maks-belum-cek-rayon_1.jsp">Belum Cek</a>
+                                    <a class="item" href="kwh-maks-cek-per-bulan_1-rayon.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                             <div class="column">
                                 <h4 class="ui header">PPTBT>3Bln</h4>
                                 <div class="ui link list">
-                                    <a class="item">Sudah Cek</a>
-                                    <a class="item">Belum Cek</a>
-                                    <a class="item">Cek per-bulan</a>
+                                    <a class="item" href="data-tbt-sudah-cek-rayon_1.jsp">Sudah Cek</a>
+                                    <a class="item" href="data-tbt-belum-cek-rayon_1.jsp">Belum Cek</a>
+                                    <a class="item" href="data-tbt-cek-bulan-rayon_1.jsp">Cek per-bulan</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <a class="item" id="cari-pelanggan" href="cari-pelanggan_1.jsp">
+                <a class="item" id="cari-pelanggan" href="cari-pelanggan-rayon_1.jsp">
                     <i class="search icon"></i>LIHAT DETAIL PELANGGAN
                 </a>
                 <div class="right menu">

@@ -27,14 +27,16 @@
             session.setAttribute("blth", blth);
             response.sendRedirect("data-kwh-maks-cek-bulan.jsp");
         }
-        
-         if (request.getParameter("commit") != null) {
+
+        if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("link", "data-kwh-maks-cek-bulan.jsp");
             response.sendRedirect("kwh-maks-belum-cek.jsp");
         }
-        
-        if(request.getParameter("commit1")!=null){
-            session.setAttribute("id_blth", request.getParameter("commit"));
+
+        if (request.getParameter("commit1") != null) {
+            session.setAttribute("id_blth", request.getParameter("commit1"));
+            session.setAttribute("link", "data-kwh-maks-cek-bulan.jsp");
             response.sendRedirect("kwh-maks-sudah-cek.jsp");
         }
     %>

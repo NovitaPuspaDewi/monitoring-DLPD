@@ -28,7 +28,8 @@
 
         if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
-            response.sendRedirect("detail-approve-kwh-0.jsp");
+            session.setAttribute("link", "data-sudah-approve-kwh-0-rayon.jsp");
+            response.sendRedirect("detail-approve-kwh-0-rayon.jsp");
         }
 
     %>

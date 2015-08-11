@@ -17,6 +17,7 @@
 
         if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
+             session.setAttribute("link", "data-kwh-maks-belum-cek-rayon.jsp");
             response.sendRedirect("kwh-maks-belum-cek-rayon.jsp");
         }
     %>
@@ -28,7 +29,7 @@
     </head>
     <body style="background-color:#CD5C5C">
         <!--Menu bar-->
-        <%@include file="menubar-admin.jsp" %>
+        <%@include file="menubar-admin-00.jsp" %>
         <br>
         <br>
         <br>

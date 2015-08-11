@@ -14,10 +14,10 @@
         String kode = session.getAttribute("username").toString();
         String bulantahun = session.getAttribute("blth").toString();
         String status = null;
-        List<LihatData_Rayon> kendaraanList = LihatData_Rayon.getDataListKwhMaks(bulantahun,kode);
-        int count = LihatData_Rayon.hitungKwhMaks(bulantahun,kode);
-        int count_belum = LihatData_Rayon.hitungKwhmaks_belumcek(bulantahun,kode);
-        int count_sudah = LihatData_Rayon.hitungKwhmaks_sudahcek(bulantahun,kode);
+        List<LihatData_Rayon> kendaraanList = LihatData_Rayon.getDataListKwhMaks(bulantahun, kode);
+        int count = LihatData_Rayon.hitungKwhMaks(bulantahun, kode);
+        int count_belum = LihatData_Rayon.hitungKwhmaks_belumcek(bulantahun, kode);
+        int count_sudah = LihatData_Rayon.hitungKwhmaks_sudahcek(bulantahun, kode);
 
         //session.removeAttribute("blth");
 
@@ -31,11 +31,13 @@
 
         if (request.getParameter("commit") != null) {
             session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("link", "data-kwh-maks-cek-bulan-rayon.jsp");
             response.sendRedirect("kwh-maks-belum-cek-rayon.jsp");
         }
 
         if (request.getParameter("commit1") != null) {
-            session.setAttribute("id_blth", request.getParameter("commit"));
+            session.setAttribute("id_blth", request.getParameter("commit1"));
+            session.setAttribute("link", "data-kwh-maks-cek-bulan-rayon.jsp");
             response.sendRedirect("kwh-maks-sudah-cek-rayon.jsp");
         }
     %>

@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="sun.java2d.pipe.RenderBuffer"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,7 +45,7 @@
                     <div class="ui segment attached">
                         <ul id="slider2">
                             <li><img src="img/logo_PLN.jpg" alt="slide1"></li>
-                            <li><img src="img/no_suap.jpg" alt="slide2" ></li>
+                            <li><img src="img/gardu.JPG" alt="slide2" ></li>
                             <li><img src="img/listrik_pintar.jpg" alt="slide2" ></li>
                         </ul>
                     </div>

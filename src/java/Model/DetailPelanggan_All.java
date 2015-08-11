@@ -33,6 +33,7 @@ public class DetailPelanggan_All {
     private String mTgl_Monitoring;
     private String mVerifikasi;
     private String mUnitup;
+    private String mApprove;
     private static JdbcTemplate jdbcTemplate = new JdbcTemplate(DatabaseConnection.getmDataSource());
 
     public String getmAlamat() {
@@ -138,7 +139,15 @@ public class DetailPelanggan_All {
     public void setmUnitup(String mUnitup) {
         this.mUnitup = mUnitup;
     }
-        
+
+    public String getmApprove() {
+        return mApprove;
+    }
+
+    public void setmApprove(String mApprove) {
+        this.mApprove = mApprove;
+    }
+                
     public static class DetailRowMapper implements RowMapper<DetailPelanggan_All> {
 
         @Override
@@ -167,6 +176,7 @@ public class DetailPelanggan_All {
             data.setmVerifikasi(rs.getString(11));
             data.setmTgl_Monitoring(rs.getString(12));
             data.setmUnitup(rs.getString(13));
+            data.setmApprove(rs.getString(14));
 
             return data;
         }
@@ -175,7 +185,7 @@ public class DetailPelanggan_All {
      public static List<DetailPelanggan_All> getDataListPelanggan(String pIDPEL) {
        // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup,approve "
                 + "from dpm "
                 + "where idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -188,7 +198,7 @@ public class DetailPelanggan_All {
     public static List<DetailPelanggan_All> getDataListKwh0(String pIDPEL) {
        // DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup,approve  "
                 + "from dpm "
                 + "where totkwh=0 AND idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -201,7 +211,7 @@ public class DetailPelanggan_All {
     public static List<DetailPelanggan_All> getDataListKwhMaks(String pIDPEL) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup,approve  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -214,7 +224,7 @@ public class DetailPelanggan_All {
     public static List<DetailPelanggan_All> getDataListKwh0_perbulan(String pIDPEL, String pBlth) {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup,approve  "
                 + "from dpm "
                 + "where totkwh=0 AND blth='" + pBlth + "' AND idpel='" + pIDPEL + "' order by idpel,blth";
 
@@ -226,7 +236,7 @@ public class DetailPelanggan_All {
 
     public static List<DetailPelanggan_All> getDataListKwhMaks_perbulan(String pIDPEL, String pBlth) {
        // DataSource dataSource = DatabaseConnection.getmDataSource();
-        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup "
+        String sql = "Select blth,idpel,nama,alamat,tarif,daya,kwh_maks,totkwh,status_monitoring,koordinat,verifikasi,tgl_monitor,unitup,approve  "
                 + "from dpm "
                 + "where totkwh>kwh_maks AND blth='" + pBlth + "' AND idpel='" + pIDPEL + "' order by idpel,blth";
 

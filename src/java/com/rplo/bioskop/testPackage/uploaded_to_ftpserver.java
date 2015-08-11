@@ -22,7 +22,7 @@ public class uploaded_to_ftpserver {
         String hostName = "127.0.0.1";
         String username = "operator";
         String password = "14147";
-        String location = "C:\\Users\\NOVITA\\Pictures\\2.JPG";
+        String location = "C:\\Users\\NOVITA\\Pictures\\capture.JPG";
        
         FTPClient ftp = null;
 

@@ -3,12 +3,61 @@
     Created on : Jun 29, 2015, 1:42:41 PM
     Author     : NOVITA
 --%>
-
+<%@page import="Model.*"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        String id1 = session.getAttribute("id_blth").toString();
+        String id2 = session.getAttribute("id_blth").toString();
+        String link = session.getAttribute("link").toString();
+        
+        String blth = id1.substring(0, 6);
+        String idpel = id2.substring(6);
+        String nama = null, alamat = null, tarif = null, koordinat = null, tgl = null, verifikasi = null, foto = null;
+        int daya = 0, kwh_maks = 0, totkwh = 0;
+
+        List<LihatData> kendaraanList = LihatData.getDataList_ByUsername_belumcek_kwh0(idpel, blth);
+        for (int i = 0; i < kendaraanList.size(); i++) {
+            nama = kendaraanList.get(i).getmNama();
+            alamat = kendaraanList.get(i).getmAlamat();
+            tarif = kendaraanList.get(i).getmTarif();
+            daya = kendaraanList.get(i).getmDaya();
+            kwh_maks = kendaraanList.get(i).getmKwhMaks();
+            totkwh = kendaraanList.get(i).getmKwhTot();
+            koordinat = kendaraanList.get(i).getmKoordinat();
+            verifikasi = kendaraanList.get(i).getmVerifikasi();
+            tgl = kendaraanList.get(i).getmTglMonitor();
+        }
+
+        if (request.getParameter("foto") != null) {
+            response.sendRedirect("display-foto.jsp");
+            session.setAttribute("link1", "kwh0-sudah-cek.jsp");
+        }
+
+        if (request.getParameter("commit") != null) {
+            Approve app = new Approve();
+            app.setmBlth(blth);
+            app.setmIdpel(idpel);
+            app.setmKoordinat(request.getParameter("koordinat"));
+            app.setmPetugas_Upload(session.getAttribute("name").toString());
+            app.setmTgl_Monitoring(request.getParameter("tanggal"));
+            app.setmVerifikasi(request.getParameter("verifikasi"));
+
+            Approve.sudah_monitor_dpm(app);
+            session.setAttribute("link", link);
+            out.print("<script type=\"text/javascript\">");
+            out.print("alert(\"Data berhasil disimpan\");");
+            out.print("window.location = 'kwh0-sudah-cek.jsp';");
+            out.print("</script>");
+
+        }
+
+
+    %>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Data Pelanggan Kwh 0</title>
@@ -33,69 +82,84 @@
                         <div class="two fields">
                             <div class="field">
                                 <label>ID PELANGGAN</label>
-                                <input placeholder="Username" name="idpel" type="text" value="22500909899">
+                                <input placeholder="Username" name="idpel" type="text" value="<%=idpel%>" disabled="disabled">
                             </div>
                             <div class="field">
                                 <label>Nama</label>
-                                <input placeholder="Password" name="nama" type="text" value="JUNADI">
+                                <input placeholder="Password" name="nama" type="text" value="<%=nama%>" disabled="disabled">
                             </div>
                         </div>
                         <div class="two fields">
                             <div class="field">
                                 <label>Alamat</label>
-                                <input placeholder="Password" name="alamat" type="text" value="JL.KASTURI GG.4">
+                                <input placeholder="Password" name="alamat" type="text" value="<%=alamat%>" disabled="disabled">
                             </div>
                             <div class="field">
                                 <label>Tarif</label>
-                                <input placeholder="Username" name="tarif" type="text" value="R1T">
+                                <input placeholder="Username" name="tarif" type="text" value="<%=tarif%>" disabled="disabled">
                             </div>
                         </div>
                         <div class="two fields">
                             <div class="field">
                                 <label>Daya</label>
-                                <input placeholder="Password" name="daya" type="text" value="450">
+                                <input placeholder="Password" name="daya" type="text" value="<%=daya%>" disabled="disabled">
                             </div>
                             <div class="field">
                                 <label>Kwh Maks</label>
-                                <input placeholder="Password" name="maks" type="text" value="324">
+                                <input placeholder="Password" name="maks" type="text" value="<%=kwh_maks%>" disabled="disabled">
                             </div>
                         </div>
                         <div class="two fields">
                             <div class="field">
                                 <label>Pemakaian bulan ini</label>
-                                <input placeholder="Username" name="kwhtot" type="text" value="0">
+                                <input placeholder="Username" name="kwhtot" type="text" value="<%=totkwh%>" disabled="disabled">
                             </div>
                             <div class="field">
                                 <label>Tanggal Monitoring</label>
                                 <div class="field">
-                                    <input type="text" id="popupDatepicker" placeholder="Tanggal Monitoring" name="Tanggal" value="09/11/2014">
+                                    <input type="text" id="popupDatepicker" placeholder="<%=tgl%>" name="tanggal" value="<%=tgl%>">
                                 </div>
                             </div>
                         </div>
                         <div class="two fields">
                             <div class="field">
                                 <label>Koordinat</label>
-                                <input placeholder="Koordinat lokasi" name="koordinat" type="text" value="-190.87767,140.87988">
+                                <input placeholder="<%=koordinat%>" name="koordinat" type="text" value="<%=koordinat%>">
                             </div>
                             <div class="field">
                                 <label>Verifikasi</label>
-                                <input placeholder="Masukan verifikasi hasil monitoring" name="verifikasi" type="text" value="Rumah Kosong">
+                                <input placeholder="<%=verifikasi%>" name="verifikasi" type="text" value="<%=verifikasi%>">
                             </div>
                         </div>
 
                         <div class="two field">
                             <div class="field">
-                                <li><img src="img/kwh_1.jpg"></li>
+                                <label>LIHAT FOTO</label>
+                                <input class="ui tiny blue button" type="submit" value="FOTO" name="foto">
                             </div>
                         </div>
 
 
                         <div class="field">
-                            <center><input class="ui tiny red button" type="submit" value="APPROVE" name="commit"></center>
+                            <center><input class="ui tiny red button" type="submit" value="UBAH DATA" name="commit"></center>
                         </div>
 
                     </div>
                 </form>
+                            
+                <div class="ui fluid form segment">
+                    <div class="field">
+                        <div class="ui action input">
+                            <label><b>Ganti Foto</b></label>
+                            <div>
+                                <h3> Pilih foto yang akan diupload </h3>
+                                <form action="uploadHandler" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="file" /><button class="ui red button" type="submit" value="upload"/>UPLOAD</button>
+                                </form>          
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -156,67 +220,9 @@
                     .sidebar('toggle');
                 });
                 
-                $('#popupDatepicker').datepick({dateFormat:'dd-M-yy'});
-                $('#popupDatepicker1').datepick({dateFormat:'dd-M-yy'});
-
-                //Add film sidebar error prompt
-                $("#addSidebar").form({
-                    idfilm: {
-                        identifier: 'idfilm',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Masukkan ID Film'
-                            }
-                        ]
-                    },
-                    judul: {
-                        identifier: 'judul',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Masukkan Judul Film'
-                            }
-                        ]
-                    },
-                    durasi: {
-                        identifier: 'durasi',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Masukkan Durasi Film'
-                            }
-                        ]
-                    },
-                    genre: {
-                        identifier: 'genre',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Masukkan Genre Film'
-                            }]
-                    },
-                    kategori: {
-                        identifier: 'kategori',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Pilih Kategori Film'
-                            }
-                        ]
-                    },
-                    gambar: {
-                        identifier: 'attachmentName',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Pilih Gambar Film'
-                            }]
-                    }
-                }, {
-                    on: 'submit',
-                    inline: 'true'
-                });
+                $('#popupDatepicker').datepick({dateFormat:'dd-mm-yy'});
+                $('#popupDatepicker1').datepick({dateFormat:'dd-mm-yy'});
+                               
             });
         </script>
         <!--End of Local script-->

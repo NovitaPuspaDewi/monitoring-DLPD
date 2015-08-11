@@ -17,55 +17,24 @@
         if (request.getParameter("commit") != null) {
 
             String id = request.getParameter("commit");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
-            String tgl = null;
-            String verifikasi = null;
-            String petugas_upload = null;
-            String koordinat = null;
+            String link="tampil-data-yang-sama-kwh-maks.jsp";
+            
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            List<Approve> data = Approve.getDataListCekPelanggan_kwhMaks(idpel);
-            for (int i = 0; i < data.size(); i++) {
-                if (i == data.size() - 1) {
-                    tgl = data.get(i).getmTgl_Monitoring();
-                    verifikasi = data.get(i).getmVerifikasi();
-                    petugas_upload = data.get(i).getmPetugas_Upload();
-                    koordinat = data.get(i).getmKoordinat();
-                }
-            }
-
-            if (data.size() != 0) {
-                Approve app = new Approve();
-                app.setmPetugas_Approve(session.getAttribute("name").toString());
-                app.setmIdpel(idpel);
-                app.setmBlth(blth);
-                app.setmTgl_Monitoring(tgl);
-                app.setmVerifikasi(verifikasi);
-                app.setmPetugas_Upload(petugas_upload);
-                app.setmKoordinat(koordinat);
-
-                Approve.Approve_Langsung(app);
-                response.sendRedirect("tampil-data-yang-sama-kwh-maks.jsp");
-            } else {
-                session.setAttribute("id", idpel);
-                session.setAttribute("blth", blth);
-                response.sendRedirect("gagal-approve-kwh-maks.jsp");
-            }
+            response.sendRedirect("detail-copy-status-kwh-maks.jsp");
+            
         }
 
         if (request.getParameter("commit1") != null) {
             String id = request.getParameter("commit1");
-            String idpel = id.substring(6);
-            String blth = id.substring(0, 6);
+            String link="tampil-data-yang-sama-kwh-maks.jsp";
+            
+            session.setAttribute("id_blth", id);
+            session.setAttribute("link", link);
 
-            Approve app = new Approve();
-            app.setmPetugas_Approve(session.getAttribute("name").toString());
-            app.setmIdpel(idpel);
-            app.setmBlth(blth);
-            Approve.Approve_Biasa(app);
-            response.sendRedirect("tampil-data-yang-sama-kwh-maks.jsp");
+            response.sendRedirect("detail-kwh-maks-sudah-cek.jsp");
         }
-
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

@@ -37,6 +37,7 @@ public class LihatData_TBT {
     private String mPetugas_Upload;
     private String mPetugas_Verifikasi;
     private int mDaya;
+    private String mFoto;
     private static JdbcTemplate jdbcTemplate = new JdbcTemplate(DatabaseConnection.getmDataSource());
 
     public static JdbcTemplate getJdbcTemplate() {
@@ -191,6 +192,14 @@ public class LihatData_TBT {
         this.mVerifikasi = mVerifikasi;
     }
 
+    public String getmFoto() {
+        return mFoto;
+    }
+
+    public void setmFoto(String mFoto) {
+        this.mFoto = mFoto;
+    }
+        
     public static class LihatDataRowMapper implements RowMapper<LihatData_TBT> {
 
         @Override
@@ -224,6 +233,7 @@ public class LihatData_TBT {
             data.setmPetugas_Verifikasi(rs.getString(16));
             data.setmTgl_Approve(rs.getString(17));
             data.setmUnitup(rs.getString(18));
+            data.setmFoto(rs.getString(19));
 
             return data;
         }
@@ -233,7 +243,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto "
                 + "from tbt "
                 + "where blth='" + pBlth + "' order by idpel,blth,bulan";
 
@@ -247,9 +257,23 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where idpel='" + pIdpel + "' OR nomor_meter='" + pIdpel + "' order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> cek_pelanggan(String pIdpel) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where approve is not null and idpel='" + pIdpel + "' OR nomor_meter='" + pIdpel + "' order by idpel,blth,bulan";
 
         List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -261,7 +285,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where blth='" + pBlth + "' AND idpel='" + pIdpel + "' order by idpel,blth,bulan";
 
@@ -275,7 +299,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where blth='" + pBlth + "' AND unitup='" + pUnitup + "' order by idpel,blth,bulan";
 
@@ -289,7 +313,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where bulan='>6' order by idpel,blth,bulan";
 
@@ -303,7 +327,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where bulan='<6' order by idpel,blth,bulan";
 
@@ -317,9 +341,23 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where bulan='>6' AND status_monitoring is not null order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+    
+    public static List<LihatData_TBT> getDataListTBT_lebih6_sudah_cek(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where bulan='>6' AND unitup='"+pUnitup+"' AND status_monitoring is not null order by idpel,blth,bulan";
 
         List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -331,7 +369,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where bulan='<6' AND status_monitoring is not null order by idpel,blth,bulan";
 
@@ -340,12 +378,27 @@ public class LihatData_TBT {
 
         return list;
     }
+    
+    public static List<LihatData_TBT> getDataListTBT_kurang6_sudah_cek(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where bulan='<6' AND unitup='"+pUnitup+"' AND status_monitoring is not null order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
 
     public static List<LihatData_TBT> getDataListTBT_lebih6_belum_cek() {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where bulan='>6' AND status_monitoring is null order by idpel,blth,bulan";
 
@@ -354,14 +407,43 @@ public class LihatData_TBT {
 
         return list;
     }
+    
+    public static List<LihatData_TBT> getDataListTBT_lebih6_belum_cek(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where bulan='>6' AND unitup='"+pUnitup+"' AND status_monitoring is null order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
 
     public static List<LihatData_TBT> getDataListTBT_kurang6_belum_cek() {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where bulan='<6' AND status_monitoring is null order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+    
+    public static List<LihatData_TBT> getDataListTBT_kurang6_belum_cek(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where bulan='<6' AND unitup='"+pUnitup+"' AND status_monitoring is null order by idpel,blth,bulan";
 
         List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
         JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
@@ -373,7 +455,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + " order by idpel,blth,bulan";
 
@@ -387,7 +469,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt where status_monitoring is not null"
                 + " order by idpel,blth,bulan";
 
@@ -401,8 +483,203 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt where status_monitoring is null"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+    
+    public static List<LihatData_TBT> getDataListTBT_belum_cek_unitup(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where status_monitoring is null AND unitup='"+pUnitup+"'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_cek(String pBlth) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where status_monitoring is not null AND blth='" + pBlth + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_belum_cek(String pBlth) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where status_monitoring is null AND blth='" + pBlth + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_cek_unitup(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where status_monitoring is not null AND unitup='" + pUnitup + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_approve(String pBlth) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is not null AND tgl_approve like '%" + pBlth + "%'"
+                + " order by tgl_approve desc";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_belum_approve() {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is null and status_monitoring is not null order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_approve() {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is not null order by tgl_approve desc";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_belum_approve(String pBlth) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is null AND status_monitoring is not null AND blth='" + pBlth + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_belum_approve_rayon(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is null AND status_monitoring is not null AND unitup='" + pUnitup + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_cek(String pBlth, String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where status_monitoring is not null AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_belum_cek(String pBlth, String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where status_monitoring is null AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'"
+                + " order by idpel,blth,bulan";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_approve(String pBlth, String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is not null AND unitup='" + pUnitup + "' AND tgl_approve like '%" + pBlth + "%'"
+                + " order by tgl_approve desc";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_sudah_approve_unitup(String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is not null AND unitup='" + pUnitup + "'"
+                + " order by tgl_approve desc";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListTBT_belum_approve(String pBlth, String pUnitup) {
+        //DataSource dataSource = DatabaseConnection.getmDataSource();
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt where approve is null AND status_monitoring is not null AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'"
                 + " order by idpel,blth,bulan";
 
         List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
@@ -415,7 +692,7 @@ public class LihatData_TBT {
         //DataSource dataSource = DatabaseConnection.getmDataSource();
 
         String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
-                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup "
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
                 + "from tbt "
                 + "where unitup='" + pUnitup + "'order by idpel,blth,bulan";
 
@@ -424,12 +701,30 @@ public class LihatData_TBT {
 
         return list;
     }
+
+    public static int hitungtbt_sudahapprove(String pBlth, String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is not null"
+                + " AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
     
-     public static int hitungtbt_sudahapprove(String pBlth, String pUnitup) {
+    public static int hitungtbt_sudahcek(String pBlth, String pUnitup) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
-        String sql = "select count(idpel) from tbt where approve is not null"
+        String sql = "select count(idpel) from tbt where status_monitoring is not null"
                 + " AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'";
         //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
 
@@ -442,8 +737,8 @@ public class LihatData_TBT {
         return count;
 
     }
-     
-      public static int hitungtbt_sudahapprove(String pBlth) {
+
+    public static int hitungtbt_sudahapprove(String pBlth) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
@@ -460,8 +755,118 @@ public class LihatData_TBT {
         return count;
 
     }
-     
-      public static int hitungtbt_belumapprove(String pBlth, String pUnitup) {
+
+    public static int hitungtbt_sudahapprove() {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is not null";
+
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungtbt_belumapprove() {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is null";
+
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+    
+    public static int hitungtbt_sudahcek(String pBlth) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where status_monitoring is not null AND blth='"+pBlth+"'";
+
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungtbt_belumcek(String pBlth) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where status_monitoring is null AND blth='"+pBlth+"'";
+
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungtbt_sudahapprove_unitup(String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is not null"
+                + " AND unitup='" + pUnitup + "'";
+
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungtbt_belumapprove_unitup(String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where approve is null"
+                + " AND unitup='" + pUnitup + "'";
+
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungtbt_belumapprove(String pBlth, String pUnitup) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
@@ -478,8 +883,26 @@ public class LihatData_TBT {
         return count;
 
     }
-      
-      public static int hitungtbt_belumapprove(String pBlth) {
+    
+    public static int hitungtbt_belumcek(String pBlth, String pUnitup) {
+        // DataSource datasource = DatabaseConnection.getmDataSource();
+        int count;
+
+        String sql = "select count(idpel) from tbt where status_monitoring is null"
+                + " AND blth='" + pBlth + "' AND unitup='" + pUnitup + "'";
+        //  JdbcTemplate jdbc = new JdbcTemplate(datasource);
+
+        try {
+            count = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (Exception ex) {
+            count = 0;
+        }
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+        return count;
+
+    }
+
+    public static int hitungtbt_belumapprove(String pBlth) {
         // DataSource datasource = DatabaseConnection.getmDataSource();
         int count;
 
@@ -497,5 +920,33 @@ public class LihatData_TBT {
 
     }
 
-   
+    public static List<LihatData_TBT> getDataListCekData_Yang_Sama() {
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where idpel in (select distinct idpel from tbt where approve is not null)"
+                + " and approve is null "
+                + "order by idpel,blth";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
+
+    public static List<LihatData_TBT> getDataListCekData_Yang_Sama(String pUnitup) {
+
+        String sql = "Select blth,idpel,nomor_meter,nama,alamat,tarif,daya,tgl_bayar,bulan,status_monitoring,koordinat, petugas_upload,"
+                + " tgl_monitor, verifikasi, approve, petugas_verifikasi, tgl_approve, unitup,foto  "
+                + "from tbt "
+                + "where idpel in (select distinct idpel from tbt where approve is not null)"
+                + " and approve is null and unitup='" + pUnitup + "' "
+                + "order by idpel,blth";
+
+        List<LihatData_TBT> list = jdbcTemplate.query(sql, new LihatData_TBT.LihatDataRowMapper());
+        JdbcUtils.closeConnection(DatabaseConnection.getmConnection());
+
+        return list;
+    }
 }

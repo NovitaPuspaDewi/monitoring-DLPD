@@ -3,7 +3,7 @@
     Created on : Jun 29, 2015, 1:42:41 PM
     Author     : NOVITA
 --%>
-<%@page import="Model.LihatData"%>
+<%@page import="Model.*"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +15,7 @@
 
         String blth = id1.substring(0, 6);
         String idpel = id2.substring(6);
-        String nama = null, alamat = null, tarif = null;
+        String nama = null, alamat = null, tarif = null, koordinat = null, tgl = null, verifikasi = null;
         int daya = 0, kwh_maks = 0, totkwh = 0;
 
         List<LihatData> kendaraanList = LihatData.getDataList_ByUsername_belumcek_kwh0(idpel, blth);
@@ -26,7 +26,29 @@
             daya = kendaraanList.get(i).getmDaya();
             kwh_maks = kendaraanList.get(i).getmKwhMaks();
             totkwh = kendaraanList.get(i).getmKwhTot();
+            koordinat = kendaraanList.get(i).getmKoordinat();
+            verifikasi = kendaraanList.get(i).getmVerifikasi();
+            tgl = kendaraanList.get(i).getmTglMonitor();
         }
+
+        if (request.getParameter("commit") != null) {
+            Approve app = new Approve();
+            app.setmBlth(blth);
+            app.setmIdpel(idpel);
+            app.setmKoordinat(request.getParameter("koordinat"));
+            app.setmPetugas_Upload(session.getAttribute("name").toString());
+            app.setmTgl_Monitoring(request.getParameter("tanggal"));
+            app.setmVerifikasi(request.getParameter("verifikasi"));
+
+            Approve.sudah_monitor_dpm(app);
+            
+            out.print("<script type=\"text/javascript\">");
+            out.print("alert(\"Data berhasil disimpan\");");
+            out.print("window.location = 'kwh0-belum-cek-rayon.jsp';");
+            out.print("</script>");
+
+        }
+
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,7 +69,7 @@
                 <h4 class="ui top attached center aligned inverted red block header">
                     DATA PELANGGAN KWH 0
                 </h4>
-                <form action="" id="saveMember">
+                <form id="saveMember">
                     <div class="ui fluid form segment">
                         <div class="two fields">
                             <div class="field">
@@ -84,7 +106,7 @@
                                 <label>Pemakaian bulan ini</label>
                                 <input name="kwhtot" type="text" value="<%=totkwh%>" disabled="disabled">
                             </div>
-                             <div class="field">
+                            <div class="field">
                                 <label>Bulan Tahun</label>
                                 <input name="blth" type="text" value="<%=blth%>" disabled="disabled">
                             </div>
@@ -92,37 +114,38 @@
                         <div class="two fields">
                             <div class="field">
                                 <label>Koordinat</label>
-                                <input placeholder="Koordinat lokasi" name="koordinat" type="text" value="">
+                                <input placeholder="Koordinat lokasi" value="<%=koordinat%>" name="koordinat" type="text" value="">
                             </div>
                             <div class="field">
                                 <label>Verifikasi</label>
-                                <input placeholder="Masukan verifikasi hasil monitoring" name="verifikasi" type="text" value="">
+                                <input placeholder="Masukan verifikasi hasil monitoring" value="<%=verifikasi%>"name="verifikasi" type="text" value="">
                             </div>
                         </div>
                         <div class="two fields">
                             <div class="field">
                                 <label>Tanggal Monitoring</label>
-                                <input type="text" id="popupDatepicker" placeholder="Tanggal Monitoring" name="Tanggal">
+                                <input type="text" id="popupDatepicker" placeholder="Tanggal Monitoring" value="<%=tgl%>" name="tanggal">
                             </div>
                             <div class="field">
-                                <div class="ui action input">
-                                    <label>Upload Foto</label>
-                                    <input type="text" id="_attachmentName" placeholder="Pilih Foto">
-                                    <label for="attachmentName" class="ui icon button btn-file">
-                                        <i class="photo icon"></i>
-                                        <input type="file" id="attachmentName" name="attachmentName" style="display: none">
-                                    </label>
-                                </div>
+                                <center><button class="ui blue button" type="submit" name="commit">SIMPAN</button></center>
                             </div>
-                        </div>
-
-
-                        <div class="field">
-                            <center><input class="ui tiny red button" type="submit" value="SUDAH MONITOR" name="commit"></center>
-                        </div>
-
+                        </div>                      
                     </div>
                 </form>
+
+                <div class="ui fluid form segment">
+                    <div class="field">
+                        <div class="ui action input">
+                            <label><b>Upload Foto</b></label>
+                            <div>
+                                <h3> Pilih foto yang akan diupload </h3>
+                                <form action="uploadHandler" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="file" /><button class="ui red button" type="submit" value="upload"/>UPLOAD</button>
+                                </form>          
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -133,7 +156,7 @@
         <script src="date/jquery.datepick.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                var fileExtentionRange = '.jpg';
+                var fileExtentionRange = '.jpg,.png, .bmp';
                 var MAX_SIZE = 4; // MB
 
                 $(document).on('change', '.btn-file :file', function() {
@@ -172,8 +195,20 @@
                 });
                 //                $(document.getElementById("add")).addClass("active");
                 //                $('.dropper').dropper();
+
+                //Show dropdown on hover
+                $('.ui.dropdown').dropdown({on: 'hover'});
+
+                //Tambah film button handler
+                $("#tambah").click(function() {
+                    $("#addSidebar")
+                    .sidebar('setting', {overlay: true})
+                    .sidebar('toggle');
+                });
+                
                 $('#popupDatepicker').datepick({dateFormat:'dd-mm-yyyy'});
                 $('#popupDatepicker1').datepick({dateFormat:'dd-mm-yyyy'});
+
             });
         </script>
         <!--End of Local script-->

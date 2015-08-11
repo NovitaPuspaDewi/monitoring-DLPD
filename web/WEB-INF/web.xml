@@ -12,6 +12,38 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>FileUploadHandler</servlet-name>
+        <servlet-class>FileUploadHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadHandler</servlet-name>
+        <servlet-class>uploadHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadHandlerTBT</servlet-name>
+        <servlet-class>uploadHandlerTBT</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>tambahFilm</servlet-name>
+        <servlet-class>tambahFilm</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>tambahFilm</servlet-name>
+        <url-pattern>/tambah</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileUploadHandler</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadHandler</servlet-name>
+        <url-pattern>/uploadHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadHandlerTBT</servlet-name>
+        <url-pattern>/uploadHandlerTBT</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -22,6 +54,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>redirect.jsp</welcome-file>
+        <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
